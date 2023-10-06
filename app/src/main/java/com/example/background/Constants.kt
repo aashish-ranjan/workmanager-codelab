@@ -34,7 +34,10 @@ const val IMAGE_MANIPULATION_WORK_NAME = "image_manipulation_work"
 
 // Other keys
 const val OUTPUT_PATH = "blur_filter_outputs"
-const val KEY_IMAGE_URI = "KEY_IMAGE_URI"
-const val TAG_OUTPUT = "OUTPUT"
+const val ORIGINAL_IMAGE_URI = "originalImgUri"
+const val KEY_TEMP_BLURRED_IMG_URI = "temporaryBlurredImgUri"
+const val KEY_SAVED_IMG_URI = "savedImgUri"
+const val CLEAR_BLUR_SAVE_FILE_CHAINED_WORK_NAME = "clearBlurSaveFileChainedWork"
+const val SAVE_IMG_TO_FILE_WORK_TAG = "saveImgToFileWorkTag"
 
 const val DELAY_TIME_MILLIS: Long = 3000

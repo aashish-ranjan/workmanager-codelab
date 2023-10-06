@@ -16,6 +16,7 @@
 
 package com.example.background
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -37,6 +38,30 @@ class BlurActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.goButton.setOnClickListener { viewModel.applyBlur(blurLevel) }
+        binding.cancelButton.setOnClickListener { viewModel.cancelWork() }
+        binding.seeFileButton.setOnClickListener {
+            viewModel.outputUri?.let { outputImgUri ->
+                val actionViewIntent = Intent(Intent.ACTION_VIEW, outputImgUri)
+                actionViewIntent.resolveActivity(packageManager)?.run {
+                    startActivity(actionViewIntent)
+                }
+            }
+        }
+        viewModel.saveImgToFileWorkInfos.observe(this) { workInfos ->
+            if (workInfos.isNotEmpty()) {
+                val saveImgToFileWorkInfo = workInfos.first()
+                if (saveImgToFileWorkInfo.state.isFinished) {
+                    showWorkFinished()
+                    val savedImgFileUri = saveImgToFileWorkInfo.outputData.getString(KEY_SAVED_IMG_URI)
+                    if (!savedImgFileUri.isNullOrEmpty()) {
+                        viewModel.setOutputUri(savedImgFileUri)
+                        binding.seeFileButton.visibility = View.VISIBLE
+                    }
+                } else {
+                    showWorkInProgress()
+                }
+            }
+        }
     }
 
     /**
